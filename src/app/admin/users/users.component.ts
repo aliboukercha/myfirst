@@ -25,7 +25,7 @@ export class UsersComponent implements OnInit {
 
   refreshData() {
     this.httpClientService.getUsers().subscribe(
-      response => this.handleSuccessfulResponse(response),
+      users => this.users = users,
     );
 
     this.activatedRoute.queryParams.subscribe(
@@ -39,10 +39,6 @@ export class UsersComponent implements OnInit {
     );
   }
 
-  handleSuccessfulResponse(response) {
-    this.users = response;
-    console.log(this.users);
-  }
   viewUser(id: number) {
     this.router.navigate(['admin','users'], {queryParams : {id, action: 'view'}});
   }

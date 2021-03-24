@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Produit } from '../model/Produit';
 import { Router } from '@angular/router';
 import { HttpClientService } from '../service/http-client.service';
+import { ProductsRessourceService } from '../services/products/products-ressource.service';
 
 @Component({
   selector: 'app-shopproduit',
@@ -14,10 +15,10 @@ export class ShopproduitComponent implements OnInit {
   produitsRecieved: Array<Produit>;
   cartProduits: any;
 
-  constructor(private router: Router, private httpClientService: HttpClientService) { }
+  constructor(private router: Router, private productsRessourceService: ProductsRessourceService) { }
 
   ngOnInit() {
-    this.httpClientService.getProduits().subscribe(
+    this.productsRessourceService.getProducts().subscribe(
       response => this.handleSuccessfulResponse(response),
     );
     //from localstorage retrieve the cart item

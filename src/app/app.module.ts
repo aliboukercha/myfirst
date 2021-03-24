@@ -15,6 +15,7 @@ import { ShopproduitComponent } from './shopproduit/shopproduit.component';
 import { ViewproduitComponent } from './admin/produits/viewproduit/viewproduit.component';
 import { HttpInterceptorService } from './service/http-interceptor.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LoginComponent } from './login/login.component';
 
 
 
@@ -31,6 +32,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     AddproduitComponent,
     ViewproduitComponent,
     ShopproduitComponent,
+    LoginComponent,
     
    
     

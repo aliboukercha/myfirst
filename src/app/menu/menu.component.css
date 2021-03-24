@@ -1,3 +1,4 @@
-.bg-green {
-    background-color: green;
+
+:host{
+    display: block;
 }

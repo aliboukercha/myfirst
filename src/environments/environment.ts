@@ -2,25 +2,13 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-export const environment = {
+import { Environment } from "./environment.model";
+
+export const environment: Environment = {
   production: false,
-  baseUrl:"http://localhost:8087",
-  signupUrl : "/home/signup",
-  loginUrl : "/home/auth",
-  addToCartUrl : "/employer/addToCart",
-  viewCartUrl : "/employer/viewCart",
-  updateCartUrl : "/employer/updateCart",
-  deleteCartUrl: "/employer/delCart",
-  addAddressUrl : "/employer/addAddress",
-  viewAddressUrl : "/employer/getAddress",
-  productsUrl : "/employer/getProducts",
-  addProductUrl : "/admin/addProduct",
-  deleteProductUrl : "/admin/delProduct",
-  updateProductUrl : "/admin/updateProducts",
-  viewOrderUrl : "/admin/viewOrders",
-  updateOrderUrl : "/admin/updateOrder",
-  placeOrderUrl : "/employer/placeOrder",
-  logoutUrl : "/home/logout",
+  api: {
+    baseUrl:"http://localhost:8080",
+  }
 };
 
 /*

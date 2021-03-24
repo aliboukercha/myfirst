@@ -1,7 +1,7 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { ProductsRessourceService } from 'src/app/services/products/products-ressource.service';
 import { Produit } from '../../../model/Produit';
-import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClientService } from '../../../service/http-client.service';
 
 @Component({
   selector: 'app-viewproduit',
@@ -16,19 +16,19 @@ export class ViewproduitComponent implements OnInit {
   @Output()
   produitDeletedEvent = new EventEmitter();
   
-  constructor(private httpClientService: HttpClientService, private router: Router) { }
+  constructor(private productsRessourceService: ProductsRessourceService, private router: Router) { }
 
   ngOnInit(){
   }
-  deleteProduit() {
-    this.httpClientService.deleteProduit(this.produit.id).subscribe(
+  deleteProduct() {
+    this.productsRessourceService.deleteProduct(this.produit.id).subscribe(
       (produit) => {
         this.produitDeletedEvent.emit();
         this.router.navigate(['admin', 'produits']);
       }
     );
   }
-  editProduit() {
+  editProduct() {
     this.router.navigate(['admin', 'produits'], { queryParams: { action: 'edit', id: this.produit.id } });
   }
 

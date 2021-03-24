@@ -1,9 +1,8 @@
-
-import { Component, Input, OnInit, Output,EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { mergeMap } from 'rxjs/operators';
+import { ProductsRessourceService } from 'src/app/services/products/products-ressource.service';
 import { Produit } from '../../../model/Produit';
-import { HttpClientService } from '../../../service/http-client.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-addproduit',
@@ -21,14 +20,8 @@ export class AddproduitComponent implements OnInit {
   @Output()
   produitAddedEvent = new EventEmitter();
   
-  
-  
-  constructor(private httpClientService: HttpClientService,
-    private activedRoute: ActivatedRoute,
-    private router: Router,
-    private httpClient: HttpClient) { }
-
-
+  constructor(private productsRessourceService : ProductsRessourceService,
+    private router: Router) { }
 
   ngOnInit(){
   }
@@ -51,26 +44,20 @@ export class AddproduitComponent implements OnInit {
       uploadData.append('imageFile', this.selectedFile, this.selectedFile.name);
       this.selectedFile.imageName = this.selectedFile.name;
 
-      this.httpClient.post('http://localhost:8080/produits/upload', uploadData, { observe: 'response' })
-        .subscribe((response) => {
-          if (response.status === 200) {
-            this.httpClientService.addProduit(this.produit).subscribe(
-              (produit) => {
-                this.produitAddedEvent.emit();
-                this.router.navigate(['admin', 'produits']);
-              }
-            );
-            console.log('Image uploaded successfully');
-          } else {
-            console.log('Image not uploaded successfully');
-          }
-        }
-        );
-    } else {
-      this.httpClientService.updateProduit(this.produit).subscribe(
+      this.productsRessourceService.uploadImage(uploadData)
+       .pipe(mergeMap(response => this.productsRessourceService.addProduct(this.produit)))
+      .subscribe(
         (produit) => {
           this.produitAddedEvent.emit();
-          this.router.navigate(['admin', 'produitks']);
+          this.router.navigate(['admin', 'produits']);
+        }
+      );
+
+    } else {
+      this.productsRessourceService.updateProduct(this.produit).subscribe(
+        (produit) => {
+          this.produitAddedEvent.emit();
+          this.router.navigate(['admin', 'produits']);
         }
       );
     }
@@ -78,7 +65,5 @@ export class AddproduitComponent implements OnInit {
   }
 
 }
-
-
 
 
