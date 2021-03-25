@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {FormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
@@ -17,9 +17,11 @@ import { HttpInterceptorService } from './service/http-interceptor.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 
-
-
-
+import { EmployeeDetailsComponent } from './employees/employee-details/employee-details.component';
+import { EmployeeListComponent } from './employees/employee-list/employee-list.component';
+import { UpdateEmployeeComponent } from './employees/update-employee/update-employee.component';
+import { CreateEmployeeComponent } from './employees/create-emplyee/create-employee.component';
+import { HomeBannerComponent } from './home/home-banner/home-banner.component';
 
 @NgModule({
   declarations: [
@@ -33,23 +35,20 @@ import { LoginComponent } from './login/login.component';
     ViewproduitComponent,
     ShopproduitComponent,
     LoginComponent,
-    
-   
-    
+    CreateEmployeeComponent,
+    EmployeeDetailsComponent,
+    EmployeeListComponent,
+    UpdateEmployeeComponent,
+    HomeBannerComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpInterceptorService,
-      multi: true
-    }
+      multi: true,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
