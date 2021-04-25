@@ -1,53 +1,55 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+import { Principal } from './principal';
+
+const LS_TOKEN_KEY = 'authenticatedUser';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class AuthenticationService  {
-
-  USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
-
-  public username: String;
-  public password: String;
+export class AuthenticationService {
+  private principalSubject = new BehaviorSubject<Principal>(null);
+  principal$: Observable<Principal> = this.principalSubject.asObservable();
 
   constructor(private http: HttpClient) {
-
+    this.principalSubject.next(this.readPrincipalFromStorage());
   }
 
-  authenticationService(username: String, password: String) {
-    return this.http.get(`http://localhost:8080/api/v1/basicauth`,
-      { headers: { authorization: this.createBasicAuthToken(username, password) } }).pipe(map((res) => {
-        this.username = username;
-        this.password = password;
-        this.registerSuccessfulLogin(username, password);
-      }));
+  login(username: string, password: string) {
+    const token = this.createBasicAuthToken(username, password);
+    return this.http
+      .get(`${environment.api.baseUrl}/api/v1/basicauth`, {
+        headers: {
+          authorization: token,
+        },
+      })
+      .pipe(
+        map((res) => {
+          const principal = {
+            username,
+            token,
+          };
+          this.writePrincipalToStorage(principal);
+          this.principalSubject.next(principal);
+        })
+      );
+  }
+  writePrincipalToStorage(principal: Principal) {
+    localStorage.setItem(LS_TOKEN_KEY, JSON.stringify(principal));
   }
 
-  createBasicAuthToken(username: String, password: String) {
-    return 'Basic ' + window.btoa(username + ":" + password)
+  private readPrincipalFromStorage(): Principal | null {
+    return JSON.parse(localStorage.getItem(LS_TOKEN_KEY));
   }
-
-  registerSuccessfulLogin(username, password) {
-    sessionStorage.setItem(this.USER_NAME_SESSION_ATTRIBUTE_NAME, username)
+  private createBasicAuthToken(username: string, password: string) {
+    return `Basic ${btoa(username + ':' + password)}`;
   }
 
   logout() {
-    sessionStorage.removeItem(this.USER_NAME_SESSION_ATTRIBUTE_NAME);
-    this.username = null;
-    this.password = null;
-  }
-
-  isUserLoggedIn() {
-    let user = sessionStorage.getItem(this.USER_NAME_SESSION_ATTRIBUTE_NAME)
-    if (user === null) return false
-    return true
-  }
-
-  getLoggedInUserName() {
-    let user = sessionStorage.getItem(this.USER_NAME_SESSION_ATTRIBUTE_NAME)
-    if (user === null) return ''
-    return user
+    this.writePrincipalToStorage(null);
+    this.principalSubject.next(null);
   }
 }

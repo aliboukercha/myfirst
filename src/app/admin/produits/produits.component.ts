@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Produit } from '../../model/Produit';
-import { HttpClientService } from '../../service/http-client.service';
+import { UserApiService } from '../../services/user-api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsRessourceService } from 'src/app/services/products/products-ressource.service';
 import { map } from 'rxjs/operators';
@@ -31,13 +31,10 @@ export class ProduitsComponent implements OnInit {
       this.produits = data.products;
     });
     this.activedRoute.queryParams.subscribe((params) => {
-      // get the url parameter named action. this can either be add or view.
       this.action = params['action'];
-      // get the parameter id. this will be the id of the book whose details
-      // are to be displayed when action is view.
+
       const id = params['id'];
-      // if id exists, convert it to integer and then retrive the book from
-      // the books array
+
       if (id) {
         this.selectedProduit = this.produits.find((produit) => {
           return produit.id === +id;

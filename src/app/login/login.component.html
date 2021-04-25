@@ -31,9 +31,12 @@
             name="password"
           />
         </div>
-        <button (click)="handleLogin()" class="btn btn-success">
-          Se connecter
-        </button>
+        <input
+          type="submit"
+          (click)="login()"
+          class="btn btn-success"
+          value="Se connecter"
+        />
       </form>
     </div>
   </div>

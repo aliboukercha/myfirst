@@ -1,25 +1,28 @@
 <div class="produitDetails">
-    <h2>Détaille du Produit</h2>
-    
-    <table>
-      <tr>
-        <td>ID Produit</td><td>{{produit.id}}</td>
-      </tr>
-      <tr>
-        <td>Nom Produit</td><td>{{produit.name}}</td>
-      </tr>
-      <tr>
-        <td>Société</td><td>{{produit.author}}</td>
-      </tr>
-      <tr>
-        <td>Prix Produit</td><td>{{produit.price}}</td>
-      </tr>
-    </table>
-    <br>
-              <img src="{{produit.retrievedImage}}" height="200" width="200">
-  <br><br>
-    
-    <a class="btn btn-small btn-warning" (click)="editProduct()">Editer</a>   
-    <a class="btn btn-small btn-danger" (click)="deleteProduct()">Supprimer</a>
-    
-  </div>
+  <h2>Détaildu Produit</h2>
+
+  <table>
+    <tr>
+      <td>ID Produit</td>
+      <td>{{ produit.id }}</td>
+    </tr>
+    <tr>
+      <td>Nom Produit</td>
+      <td>{{ produit.name }}</td>
+    </tr>
+    <tr>
+      <td>Société</td>
+      <td>{{ produit.author }}</td>
+    </tr>
+    <tr>
+      <td>Prix Produit</td>
+      <td>{{ produit.price }}</td>
+    </tr>
+  </table>
+  <br />
+  <img src="{{ produit.retrievedImage }}" height="200" width="200" />
+  <br /><br />
+
+  <a class="btn btn-small btn-warning" (click)="editProduct()">Editer</a>
+  <a class="btn btn-small btn-danger" (click)="deleteProduct()">Supprimer</a>
+</div>

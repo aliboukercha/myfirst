@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Produit } from '../model/Produit';
 import { Router } from '@angular/router';
-import { HttpClientService } from '../service/http-client.service';
+import { Produit } from '../model/Produit';
 import { ProductsRessourceService } from '../services/products/products-ressource.service';
 
 @Component({
-  selector: 'app-shopproduit',
+  selector: 'app-shopproduct',
   templateUrl: './shopproduit.component.html',
   styleUrls: ['./shopproduit.component.css'],
 })
