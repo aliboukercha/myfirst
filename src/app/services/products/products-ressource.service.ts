@@ -5,27 +5,38 @@ import { Produit } from 'src/app/model/Produit';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductsRessourceService {
- 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   getProducts() {
-    return this.httpClient.get<Produit[]>(`${environment.api.baseUrl}/produits`);
+    return this.httpClient.get<Produit[]>(
+      `${environment.api.baseUrl}/products`
+    );
   }
   addProduct(newProduit: Produit) {
-    return this.httpClient.post<Produit>(`${environment.api.baseUrl}/produits/add`, newProduit);
+    return this.httpClient.post<Produit>(
+      `${environment.api.baseUrl}/products/add`,
+      newProduit
+    );
   }
   deleteProduct(id) {
-    return this.httpClient.delete<Produit>(`${environment.api.baseUrl}/produits/` + id);
+    return this.httpClient.delete<Produit>(
+      `${environment.api.baseUrl}/products/${id}`
+    );
   }
   updateProduct(updatedProduit: Produit) {
-    return this.httpClient.put<Produit>(`${environment.api.baseUrl}/produits/update`, updatedProduit);
+    return this.httpClient.put<Produit>(
+      `${environment.api.baseUrl}/products`,
+      updatedProduit
+    );
   }
 
   uploadImage(uploadData: FormData): Observable<unknown> {
-    return this.httpClient.post(`${environment.api.baseUrl}/produits/upload`, uploadData)
+    return this.httpClient.post(
+      `${environment.api.baseUrl}/products/upload`,
+      uploadData
+    );
   }
-
 }

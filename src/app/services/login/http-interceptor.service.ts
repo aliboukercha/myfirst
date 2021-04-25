@@ -7,8 +7,8 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthenticationService } from 'src/app/login/auth.service';
-import { Principal } from 'src/app/login/principal';
+import { AuthenticationService } from 'src/app/pages/login/auth.service';
+import { Principal } from 'src/app/pages/login/principal';
 
 @Injectable({
   providedIn: 'root',
