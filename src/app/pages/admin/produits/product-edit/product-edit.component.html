@@ -1,0 +1,62 @@
+<h1>
+  <ng-container *ngIf="isAdd(); else createProduct">
+    Modifier le produit {{ product.name }}
+  </ng-container>
+  <ng-template #createProduct> Créer un nouveau produit </ng-template>
+</h1>
+
+<form (ngSubmit)="save()" #productForm="ngForm" class="was-validated">
+  <label for="name">Nom Produit</label>
+  <input
+    type="text"
+    class="form-control"
+    id="name"
+    required
+    placeholder="Produit Name"
+    [(ngModel)]="product.name"
+    name="name"
+  />
+  <div class="invalid-feedback">Veuillez entrer le nom du produit</div>
+
+  <label for="author">Société</label>
+  <input
+    type="text"
+    class="form-control"
+    id="author"
+    placeholder="author"
+    name="author"
+    [(ngModel)]="product.author"
+  />
+
+  <label for="author">Prix</label>
+  <input
+    type="text"
+    class="form-control"
+    id="price"
+    placeholder="price"
+    name="price"
+    [(ngModel)]="product.price"
+  />
+
+  <br />
+  <input
+    name="image"
+    #image
+    [(ngModel)]="product.picByte"
+    type="file"
+    required
+    (change)="onFileChanged($event)"
+  />
+  <div class="invalid-feedback">Merci de choisir une image</div>
+
+  <img [src]="imgURL" height="200" width="200" *ngIf="imgURL" />
+
+  <br />
+  <button
+    type="submit"
+    class="btn btn-success"
+    [disabled]="productForm.invalid"
+  >
+    Enregistrer Produit
+  </button>
+</form>

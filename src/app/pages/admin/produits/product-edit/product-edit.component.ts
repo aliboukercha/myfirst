@@ -1,18 +1,33 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { mergeMap } from 'rxjs/operators';
 import { ProductsRessourceService } from 'src/app/services/products/products-ressource.service';
 import { Produit } from '../../../../model/Produit';
 
 @Component({
-  selector: 'app-addproduit',
-  templateUrl: './addproduit.component.html',
-  styleUrls: ['./addproduit.component.scss'],
+  selector: 'nab-product-edit',
+  templateUrl: './product-edit.component.html',
+  styleUrls: ['./product-edit.component.scss'],
 })
-export class AddproduitComponent implements OnInit {
+export class AddproduitComponent implements OnInit, OnChanges {
+  // TODO rename to AddProductComponent
   @Input()
-  produit: Produit;
+  product: Produit;
   private selectedFile;
+
+  @ViewChild('image')
+  productImageEl: ElementRef<HTMLInputElement>;
+
   imgURL: any;
 
   @Output()
@@ -22,10 +37,15 @@ export class AddproduitComponent implements OnInit {
     private productsRessourceService: ProductsRessourceService,
     private router: Router
   ) {}
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.product && !changes.product.currentValue) {
+      this.product = {} as any;
+    }
+  }
 
   ngOnInit() {}
+
   public onFileChanged(event) {
-    console.log(event);
     this.selectedFile = event.target.files[0];
 
     let reader = new FileReader();
@@ -34,19 +54,20 @@ export class AddproduitComponent implements OnInit {
       this.imgURL = reader.result;
     };
   }
-  saveProduit() {
-    //If there is no book id then it is an add book call else it is an edit book call
-    if (this.produit.id == null) {
+
+  isAdd() {
+    return this.product?.id == null;
+  }
+
+  save() {
+    if (this.isAdd()) {
       const uploadData = new FormData();
-      uploadData.append('imageFile', this.selectedFile, this.selectedFile.name);
-      this.selectedFile.imageName = this.selectedFile.name;
+      uploadData.append('imageFile', this.productImageEl.nativeElement.value);
 
       this.productsRessourceService
         .uploadImage(uploadData)
         .pipe(
-          mergeMap((response) =>
-            this.productsRessourceService.addProduct(this.produit)
-          )
+          mergeMap(() => this.productsRessourceService.addProduct(this.product))
         )
         .subscribe((produit) => {
           this.produitAddedEvent.emit();
@@ -54,7 +75,7 @@ export class AddproduitComponent implements OnInit {
         });
     } else {
       this.productsRessourceService
-        .updateProduct(this.produit)
+        .updateProduct(this.product)
         .subscribe((produit) => {
           this.produitAddedEvent.emit();
           this.router.navigate(['admin', 'produits']);

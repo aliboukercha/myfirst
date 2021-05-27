@@ -4,7 +4,7 @@ import { ProductsRessourceService } from 'src/app/services/products/products-res
 import { Produit } from '../../../../model/Produit';
 
 @Component({
-  selector: 'app-viewproduit',
+  selector: 'nab-viewproduct',
   templateUrl: './viewproduit.component.html',
   styleUrls: ['./viewproduit.component.scss'],
 })

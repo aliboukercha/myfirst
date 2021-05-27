@@ -11,12 +11,9 @@ export class LoginComponent implements OnInit {
   username: string;
   password: string;
   errorMessage = 'Invalid Credentials';
-  successMessage: string;
   invalidLogin = false;
-  loginSuccess = false;
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService
   ) {}
@@ -26,15 +23,10 @@ export class LoginComponent implements OnInit {
   login() {
     this.authenticationService.login(this.username, this.password).subscribe(
       (result) => {
-        this.invalidLogin = false;
-        this.loginSuccess = true;
-        this.successMessage = 'Login Successful.';
-        this.router.navigate(['/hello-world']);
+        this.router.navigate(['/']);
       },
       (error) => {
-        console.error(error);
         this.invalidLogin = true;
-        this.loginSuccess = false;
       }
     );
   }

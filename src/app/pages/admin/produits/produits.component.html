@@ -1,5 +1,7 @@
 <h1>Administration des Produits</h1>
-<a class="btn btn-primary mb-3 aab" (click)="addProduit()">Ajouter un nouveau Produit</a>
+<a class="btn btn-primary mb-3 aab" (click)="addProduit()"
+  >Ajouter un nouveau Produit</a
+>
 <div class="container row">
   <div class="col-md-6">
     <table class="table">
@@ -12,17 +14,31 @@
       </thead>
       <tbody>
         <tr *ngFor="let produit of produits">
-          <td>{{produit.id}}</td>
-          <td>{{produit.name}}</td>
+          <td>{{ produit.id }}</td>
+          <td>{{ produit.name }}</td>
           <td>
-            <button type="button" class="btn btn-primary aab" (click)="viewProduit(produit.id)">Details</button>
+            <button
+              type="button"
+              class="btn btn-primary aab"
+              (click)="viewProduit(produit.id)"
+            >
+              Details
+            </button>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
   <div class="col-md-6">
-    <app-addproduit *ngIf="action === 'edit' || action === 'add'" [produit]="selectedProduit" (produitAddedEvent)="refreshData()"></app-addproduit>
-    <app-viewproduit *ngIf="action === 'view'" [produit]="selectedProduit" (produitDeletedEvent)="refreshData()"></app-viewproduit>
+    <nab-product-edit
+      *ngIf="action === 'edit' || action === 'add'"
+      [product]="selectedProduit"
+      (produitAddedEvent)="refreshData()"
+    ></nab-product-edit>
+    <nab-viewproduct
+      *ngIf="action === 'view'"
+      [produit]="selectedProduit"
+      (produitDeletedEvent)="refreshData()"
+    ></nab-viewproduct>
   </div>
 </div>

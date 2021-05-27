@@ -4,6 +4,7 @@ import { ProfileDropdownComponent } from './profile-dropdown/profile-dropdown.co
 import { MenuComponent } from './menu/menu.component';
 import { HomeBannerComponent } from '../pages/home/home-banner/home-banner.component';
 import { FooterComponent } from './footer/footer.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,7 @@ import { FooterComponent } from './footer/footer.component';
     HomeBannerComponent,
     FooterComponent,
   ],
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   exports: [
     ProfileDropdownComponent,
     MenuComponent,

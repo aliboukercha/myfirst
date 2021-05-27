@@ -1,1 +1,14 @@
-<p>profile-dropdown works!</p>
+<div class="dropdown">
+  <button
+    class="btn btn-secondary dropdown-toggle"
+    type="button"
+    id="profileDropdown"
+    data-bs-toggle="dropdown"
+    aria-expanded="false"
+  >
+    {{ (authenticationService.principal$ | async).username }}
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+    <li><a class="dropdown-item" (click)="logout()">logout</a></li>
+  </ul>
+</div>

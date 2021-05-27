@@ -11,10 +11,10 @@ import { UiModule } from './ui/ui.module';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     HttpClientModule,
     PagesModule,
     UiModule,
+    AppRoutingModule,
   ],
   providers: [
     {

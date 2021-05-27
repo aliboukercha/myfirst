@@ -75,12 +75,17 @@
           >
         </li>
       </ul>
-      <form class="d-flex">
-        principal$: {{ authenticationService.principal$ | async | json }}
-        <button class="btn btn-secondary" type="submit" routerLink="/login">
-          Login
-        </button>
-      </form>
+      <div class="d-flex">
+        <app-profile-dropdown
+          *ngIf="authenticationService.principal$ | async; else notLoggedId"
+        >
+        </app-profile-dropdown>
+        <ng-template #notLoggedId>
+          <button class="btn btn-secondary" type="submit" routerLink="/login">
+            Login
+          </button>
+        </ng-template>
+      </div>
     </div>
   </div>
 </nav>
